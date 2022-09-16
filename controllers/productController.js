@@ -40,3 +40,35 @@ exports.getProductById = catchAsync(async (req, res) => {
     });
   }
 });
+
+exports.deleteProductById = catchAsync(async (req, res) => {
+  const foundProduct = await Product.findByIdAndDelete(req.params.id);
+  if (foundProduct) {
+    res.status(200).json({
+      status: " delete success",
+      data: {
+        product: foundProduct,
+      },
+    });
+  } else {
+    res.status(404).json({
+      status: "not found",
+    });
+  }
+});
+
+exports.replaceProductById = catchAsync(async (req, res) => {
+  const foundProduct = await Product.findByIdAndUpdate(req.params.id, req.body);
+  if (foundProduct) {
+    res.status(200).json({
+      status: " replacement success",
+      data: {
+        product: foundProduct,
+      },
+    });
+  } else {
+    res.status(404).json({
+      status: "not found",
+    });
+  }
+});
